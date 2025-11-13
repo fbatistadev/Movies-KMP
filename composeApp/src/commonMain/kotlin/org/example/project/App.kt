@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import org.example.project.navigation.AppRoutes
 import org.example.project.ui.movies.MoviesListRoute
-import org.example.project.ui.movies.MoviesListScreen
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
@@ -21,7 +20,7 @@ fun App() {
             }
 
             composable<AppRoutes.MovieDetails> {
-                // MovieDetailsScreen()
+                // MovieDetailsRoute()
             }
         }
     }
