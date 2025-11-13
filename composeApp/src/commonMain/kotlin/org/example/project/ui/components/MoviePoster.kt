@@ -1,6 +1,5 @@
 package org.example.project.ui.components
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,10 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import movies.composeapp.generated.resources.Res
-import movies.composeapp.generated.resources.minecraft_movie
+import coil3.compose.AsyncImage
 import org.example.project.domain.model.Movie
-import org.jetbrains.compose.resources.painterResource
 
 @Composable
 fun MoviePoster(
@@ -34,8 +31,8 @@ fun MoviePoster(
                 .height(210.dp),
             shape = RoundedCornerShape(12.dp)
         ) {
-            Image(
-                painter = painterResource(Res.drawable.minecraft_movie),
+            AsyncImage(
+                model = movie.posterUrl,
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth(),

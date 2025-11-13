@@ -10,19 +10,48 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.example.project.data.network.IMAGE_SMALL_BASE_URL
+import org.example.project.data.network.KtorApiClient
+import org.example.project.domain.model.Movie
 import org.example.project.domain.model.movie1
 import org.example.project.ui.components.MoviePoster
 import org.example.project.ui.components.MoviesSection
 
 @Composable
 fun MoviesListRoute() {
-    MoviesListScreen()
+
+    var popularMovies by remember {
+        mutableStateOf(emptyList<Movie>())
+    }
+
+    LaunchedEffect(Unit) {
+        val response = KtorApiClient.getMovies("popular")
+        popularMovies = response.results.map {
+            Movie(
+                id = it.id,
+                title = it.title,
+                overview = it.overview,
+                posterUrl = "$IMAGE_SMALL_BASE_URL${it.posterPath}",
+            )
+        }
+    }
+
+    MoviesListScreen(
+        popularMovies = popularMovies
+    )
 }
 
 @Composable
-fun MoviesListScreen() {
+fun MoviesListScreen(
+    popularMovies: List<Movie>
+) {
     Scaffold { paddingValues ->
         LazyColumn(
             modifier = Modifier.padding(paddingValues),
@@ -31,9 +60,7 @@ fun MoviesListScreen() {
             item {
                 MoviesSection(
                     title = "Popular Movies",
-                    movies = List(10) {
-                        movie1
-                    }
+                    movies = popularMovies
                 )
             }
 
