@@ -20,7 +20,7 @@ fun MovieResponse.toModel() = Movie(
 // fake objects
 val movie1 = Movie(
     id = 1,
-    title = "Minecraft",
+    title = "A Minecraft Movie",
     overview = "Movie Overview",
     posterUrl = "https://image.tmdb.org/t/",
 )

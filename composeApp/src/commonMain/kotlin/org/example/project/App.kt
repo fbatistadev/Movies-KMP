@@ -8,6 +8,7 @@ import org.example.project.di.dataModule
 import org.example.project.di.networkModule
 import org.example.project.di.viewModelModule
 import org.example.project.navigation.AppRoutes
+import org.example.project.ui.moviedetail.MovieDetailRoute
 import org.example.project.ui.movies.MoviesListRoute
 import org.example.project.ui.theme.MoviesAppTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -25,11 +26,15 @@ fun App() {
             val navController = rememberNavController()
             NavHost(navController, startDestination = AppRoutes.MoviesList) {
                 composable<AppRoutes.MoviesList> {
-                    MoviesListRoute()
+                    MoviesListRoute(
+                        navigateToMovieDetail = { movieId ->
+                            navController.navigate(AppRoutes.MovieDetail(movieId))
+                        }
+                    )
                 }
 
                 composable<AppRoutes.MovieDetail> {
-                    // MovieDetailRoute()
+                    MovieDetailRoute()
                 }
             }
         }

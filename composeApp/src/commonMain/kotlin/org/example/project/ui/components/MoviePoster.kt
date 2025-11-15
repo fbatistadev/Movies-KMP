@@ -1,5 +1,6 @@
 package org.example.project.ui.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,10 +20,14 @@ import org.example.project.domain.model.Movie
 @Composable
 fun MoviePoster(
     movie: Movie,
+    onMoviePosterClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier
+            .clickable {
+                onMoviePosterClick()
+            }
             .width(140.dp)
     ) {
         Card(
