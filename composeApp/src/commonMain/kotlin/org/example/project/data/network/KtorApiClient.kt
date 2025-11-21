@@ -10,11 +10,14 @@ import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.parameter
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import org.example.project.data.network.model.CreditsListResponse
+import org.example.project.data.network.model.MovieResponse
 import org.example.project.data.network.model.MoviesListResponse
 
 private const val BASE_URL = "https://api.themoviedb.org"
@@ -51,9 +54,25 @@ class KtorApiClient {
         }
     }
 
-    suspend fun getMovies(category: String, language: String = "pt-BR"): MoviesListResponse {
+    suspend fun getMovies(category: String): MoviesListResponse {
         return client.get("$BASE_URL/3/movie/$category") {
-            parameter("language", language)
+            addLanguageParam()
         }.body()
+    }
+
+    suspend fun getMovieDetail(movieId: Int): MovieResponse {
+        return client.get("$BASE_URL/3/movie/$movieId") {
+            addLanguageParam()
+        }.body()
+    }
+
+    suspend fun getCredits(movieId: Int): CreditsListResponse {
+        return client.get("$BASE_URL/3/movie/$movieId/credits") {
+            addLanguageParam()
+        }.body()
+    }
+
+    private fun HttpRequestBuilder.addLanguageParam(language: String = "pt-BR") {
+        parameter("language", language)
     }
 }
